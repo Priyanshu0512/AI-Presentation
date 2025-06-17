@@ -11,6 +11,7 @@ import {
   UserButton,
 } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "Vivid-AI",
@@ -44,6 +45,7 @@ export default function RootLayout({
           >
             {children}
           </ThemeProvider>
+          <Toaster />
         </body>
       </html>
     </ClerkProvider>

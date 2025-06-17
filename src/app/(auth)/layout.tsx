@@ -4,7 +4,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-const Layout = ({ children }: Props) => {
+const AuthCallbackPage = ({ children }: Props) => {
   return (
     <div className="w-full flex min-h-screen items-center justify-center">
       {children}
@@ -12,4 +12,4 @@ const Layout = ({ children }: Props) => {
   );
 };
 
-export default Layout;
+export default AuthCallbackPage;

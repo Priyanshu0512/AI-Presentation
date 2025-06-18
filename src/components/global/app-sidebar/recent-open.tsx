@@ -31,32 +31,40 @@ const RecentOpen = ({ recentProjects }: Props) => {
     router.push(`/presentation/${projectId}`);
   };
   return (
-    <SidebarGroup>
-      <SidebarGroupLabel>Recently Opened</SidebarGroupLabel>
-      <SidebarMenu>
-        {recentProjects.length > 0 ? (
-          recentProjects.map((item) => (
-            <SidebarMenuItem key={item.id}>
-              <SidebarMenuButton
-                asChild
-                tooltip={item.title}
-                className={`hover:bg-primary-80`}
-              >
-                <Button
-                  variant={"link"}
-                  onClick={() => handleClick(item.id, item.slides)}
-                  className="text-xs items-center justify-start"
-                >
-                  <span> {item.title}</span>
-                </Button>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          ))
-        ) : (
-          <span className="ml-2 text-sm font-semibold">No recent Projects</span>
-        )}
-      </SidebarMenu>
-    </SidebarGroup>
+    <>
+      {recentProjects.length > 0 ? (
+        <SidebarGroup>
+          <SidebarGroupLabel>Recently Opened</SidebarGroupLabel>
+          <SidebarMenu>
+            {recentProjects.length > 0 ? (
+              recentProjects.map((item) => (
+                <SidebarMenuItem key={item.id}>
+                  <SidebarMenuButton
+                    asChild
+                    tooltip={item.title}
+                    className={`hover:bg-primary-80`}
+                  >
+                    <Button
+                      variant={"link"}
+                      onClick={() => handleClick(item.id, item.slides)}
+                      className="text-xs items-center justify-start"
+                    >
+                      <span> {item.title}</span>
+                    </Button>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))
+            ) : (
+              <span className="ml-2 text-sm font-semibold">
+                No recent Projects
+              </span>
+            )}
+          </SidebarMenu>
+        </SidebarGroup>
+      ) : (
+        ""
+      )}
+    </>
   );
 };
 

@@ -11,8 +11,7 @@ const NewProjectButton = ({ user }: { user: User }) => {
     <Button
       className="bg-primary-80 rounded-lg hover:bg-background-80 text-primary font-semibold "
       disabled={!user.subscription}
-      //   wip
-      //   onClick={()=>} push to create project
+      onClick={() => router.push("/create-page")}
     >
       <Plus />
       New Project

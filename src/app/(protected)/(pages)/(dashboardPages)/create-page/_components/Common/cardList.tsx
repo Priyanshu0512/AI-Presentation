@@ -3,6 +3,7 @@ import { OutlineCard } from "@/lib/types";
 import React, { useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Card from "./card";
+import AddCardButton from "./add-card-button";
 type Props = {
   outlines: OutlineCard[];
   editingCard: string | null;
@@ -138,6 +139,26 @@ const CardList = ({
     return {};
   };
 
+  const onAddCard = (index?: number) => {
+    const newCard: OutlineCard = {
+      id: Math.random().toString(36).substring(2, 9),
+      title: editText || "New Section",
+      order: (index !== undefined ? index + 1 : outlines.length) + 1,
+    };
+
+    const updatedCards =
+      index !== undefined
+        ? [
+            ...outlines.slice(0, index + 1),
+            newCard,
+            ...outlines
+              .slice(index + 1)
+              .map((card) => ({ ...card, order: card.order + 1 })),
+          ]
+        : [...outlines, newCard];
+    addMultipleOutlines(updatedCards);
+    setEditText("");
+  };
   return (
     <motion.div
       className="space-y-2 -my-2"

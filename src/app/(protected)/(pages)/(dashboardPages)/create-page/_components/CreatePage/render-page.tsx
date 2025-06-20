@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import usePromptStore from "@/store/usePromptStore";
 import CreatePage from "./create-page";
 import CreateAI from "./GenerateAI/createAI";
+import ScratchPage from "../Scratch/scratch-page";
 
 const RenderPage = () => {
   const router = useRouter();
@@ -31,7 +32,7 @@ const RenderPage = () => {
       case "create":
         return <CreatePage onSelectOption={handleSelectOption} />;
       case "create-scratch":
-        return <>2</>;
+        return <ScratchPage onBack={handleBack} />;
       case "creative-ai":
         return <CreateAI onBack={handleBack} />;
       default:

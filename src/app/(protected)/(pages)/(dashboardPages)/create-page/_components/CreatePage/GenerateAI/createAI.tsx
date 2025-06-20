@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { containerVariants, itemsVariants } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
@@ -15,6 +15,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import CardList from "../../Common/cardList";
+import usePromptStore from "@/store/usePromptStore";
+import RecentPrompts from "./recent-prompts";
+import { toast } from "sonner";
+import { generateCreativePrompt } from "@/actions/chatgpt";
 
 type Props = {
   onBack: () => void;
@@ -36,6 +40,8 @@ const CreateAI = ({ onBack }: Props) => {
 
   const [cardNumber, setCardNumber] = useState(0);
   const [selectedCard, setSelectedCard] = useState<string | null>(null);
+
+  const { prompts, addPrompt } = usePromptStore();
   const handleBack = () => {
     onBack();
   };
@@ -48,7 +54,23 @@ const CreateAI = ({ onBack }: Props) => {
     resetOutlines();
   };
 
-  const generateOutline = () => {};
+  const generateOutline = async () => {
+    if (currentAiPrompt === "") {
+      toast.error("Error", {
+        description: "Please enter a prompt",
+      });
+      return;
+    }
+
+    setIsGenerating(true);
+    const res = await generateCreativePrompt(currentAiPrompt);
+  };
+
+  const handleGenerate = () => {};
+
+  useEffect(() => {
+    setCardNumber(outlines.length);
+  }, [outlines.length]);
   return (
     <motion.div
       className="space-y-6 w-full max-w-4xl  mx-auto px-4 sm:px-6 lg:px-8 "
@@ -151,6 +173,23 @@ const CreateAI = ({ onBack }: Props) => {
           setEditText(title);
         }}
       />
+
+      {outlines.length > 0 && (
+        <Button
+          className="w-full"
+          onClick={handleGenerate}
+          disabled={isGenerating}
+        >
+          {isGenerating ? (
+            <>
+              <Loader2 className="animate-spin mr-2" /> Generating...
+            </>
+          ) : (
+            "Generate"
+          )}
+        </Button>
+      )}
+      {prompts.length > 0 && <RecentPrompts />}
     </motion.div>
   );
 };

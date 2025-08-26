@@ -22,9 +22,7 @@
 
 Add screenshots to `/public` and reference them here:
 
-```html
 <img width="1600" alt="Editor Screenshot" src="/public/screens/editor.png" />
-```
 
 ---
 
